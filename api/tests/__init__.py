@@ -7,6 +7,7 @@ from datetime import timedelta, datetime
 from .. import app, get_session
 from ..user.models import User
 from ..booking.models import Booking
+from ..product.models import Product
 from ..auth.models import Token
 from ..user.utils import hash_password
 from ..auth.utils import create_access_token
@@ -60,6 +61,20 @@ def booking_fixture(session: Session, user: User) -> Booking:
     session.commit()
     session.refresh(b)
     return b
+
+
+@pytest.fixture(name="product")
+def product_fixture(session: Session, user: User) -> Product:
+    p = Product(
+        title="Pixel 7 Pro",
+        description="google Pixel 7 pro",
+        tags=["phone", "google"],
+        image_path="./assets/pixel_7_pro.png"
+    )
+    session.add(p)
+    session.commit()
+    session.refresh(p)
+    return p
 
 
 @pytest.fixture(name="token")
