@@ -7,8 +7,9 @@ from typing import Optional, Literal, List
 class BaseProduct(SQLModel):
     title: str
     description: str
+    price: int
     tags: List[str] = Field(sa_type=JSON)
-    image_path: str
+    image_path: Optional[str]
 
 
 class Product(BaseProduct, table=True):
@@ -27,4 +28,5 @@ class UpdateProduct(SQLModel):
     title: Optional[str]
     description: Optional[str]
     tags: Optional[List[str]]
+    price: Optional[int]
     image_path: Optional[str]

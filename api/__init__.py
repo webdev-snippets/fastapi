@@ -5,7 +5,10 @@ from functools import lru_cache
 
 from .config import *
 from .models import *
-
+from .user.models import *
+from .product.models import *
+from .auth.models import *
+from .booking.models import *
 
 @lru_cache
 def get_settings() -> Settings:

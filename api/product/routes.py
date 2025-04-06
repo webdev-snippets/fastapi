@@ -43,11 +43,11 @@ async def update_booking(*, product_id: UUID4, update_product: UpdateProduct, s:
 
 @router.get("", response_model=list[PublicProduct], description="get products", status_code=status.HTTP_200_OK)
 async def get_products(*, s: Annotated[Session, Depends(get_session)], settings: Annotated[Settings, Depends(get_settings)]):
-    try:
-        logger.critical(s.exec(select(Product)).all())
-        return s.exec(select(Product)).all()
-    except:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    # try:
+    # logger.critical(s.exec(select(Product)).one_or_none())
+    return s.exec(select(Product)).all()
+    # except:
+    # raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
 
 @router.delete("/{product_id}", description="delete booking", status_code=status.HTTP_204_NO_CONTENT)

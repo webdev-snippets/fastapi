@@ -69,7 +69,8 @@ def product_fixture(session: Session, user: User) -> Product:
         title="Pixel 7 Pro",
         description="google Pixel 7 pro",
         tags=["phone", "google"],
-        image_path="./assets/pixel_7_pro.png"
+        image_path="./assets/pixel_7_pro.png",
+        price=699
     )
     session.add(p)
     session.commit()

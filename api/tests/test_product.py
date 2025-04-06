@@ -11,7 +11,8 @@ def test_create_booking(client: TestClient, session: Session, token: Token, user
         json={"title": f"Pixel 6 Pro",
               "description": "google Pixel 6 pro",
               "tags": ["google", "Pixel 6 Pro"],
-              "image_path": "./assets/Pixel_6_pro.png"},
+              "image_path": "./assets/Pixel_6_pro.png",
+              "price": 599},
         headers={
             "Authorization": f"Bearer {token.access_token}"
         }
@@ -21,7 +22,8 @@ def test_create_booking(client: TestClient, session: Session, token: Token, user
         json={"title": f"Pixel 6 Pro",
               "description": "google Pixel 6 pro",
               "tags": ["google", "Pixel 6 Pro"],
-              "image_path": "./assets/Pixel_6_pro.png"},
+              "image_path": "./assets/Pixel_6_pro.png",
+              "price": 599},
     )
     assert unauthenticated_response.status_code == 401
 
@@ -32,6 +34,7 @@ def test_create_booking(client: TestClient, session: Session, token: Token, user
     assert response.status_code == 201
     assert _json is not None
     assert _json['title'] == "Pixel 6 Pro"
+    assert _json['price'] == 599
     assert _json['description'] == "google Pixel 6 pro"
     assert _json['tags'][0] == "google"
     assert _json['tags'][1] == "Pixel 6 Pro"
@@ -40,6 +43,7 @@ def test_create_booking(client: TestClient, session: Session, token: Token, user
 
     assert _db_product is not None
     assert _db_product.title == _json['title']
+    assert _db_product.price == _json['price']
     assert _db_product.description == _json['description']
     assert _db_product.tags == _json['tags']
     assert _db_product.image_path == _json['image_path']
@@ -52,7 +56,8 @@ def test_update_booking(client: TestClient, session: Session, token: Token, prod
         json={"title": f"Pixel 9 Pro",
               "description": "google Pixel 9 pro",
               "tags": ["google", "Pixel 9 Pro",],
-              "image_path": "./assets/Pixel_9_pro.png"},
+              "image_path": "./assets/Pixel_9_pro.png",
+              "price": 799},
         headers={
             "Authorization": f"Bearer {token.access_token}"
         }
@@ -63,7 +68,8 @@ def test_update_booking(client: TestClient, session: Session, token: Token, prod
         json={"title": f"Pixel 9 Pro",
               "description": "google Pixel 9 pro",
               "tags": ["google", "Pixel 9 Pro",],
-              "image_path": "./assets/Pixel_9_pro.png"},
+              "image_path": "./assets/Pixel_9_pro.png",
+              "price": 799},
     )
     assert unauthenticated_response.status_code == 401
     _json = response.json()
@@ -73,6 +79,7 @@ def test_update_booking(client: TestClient, session: Session, token: Token, prod
     assert response.status_code == 200
     assert _json is not None
     assert _json['title'] == "Pixel 9 Pro"
+    assert _json['price'] == 799
     assert _json['description'] == "google Pixel 9 pro"
     assert _json['tags'][0] == "google"
     assert _json['tags'][1] == "Pixel 9 Pro"
@@ -81,6 +88,7 @@ def test_update_booking(client: TestClient, session: Session, token: Token, prod
 
     assert _db_product is not None
     assert _db_product.title == _json['title']
+    assert _db_product.price == _json['price']
     assert _db_product.description == _json['description']
     assert _db_product.tags == _json['tags']
     assert _db_product.image_path == _json['image_path']
@@ -97,6 +105,7 @@ def test_get_booking(client: TestClient, session: Session, token: Token, product
     assert response.status_code == 200
     assert _json is not None
     assert _json['title'] == product.title
+    assert _json['price'] == product.price
     assert _json['description'] == product.description
     assert _json['tags'][0] == product.tags[0]
     assert _json['tags'][1] == product.tags[1]
