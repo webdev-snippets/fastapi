@@ -29,7 +29,7 @@ async def post_booking(*, new_product: CreateProduct, s: Annotated[Session, Depe
 
 
 @router.patch("/{product_id}", response_model=PublicProduct, description="Update a product", status_code=status.HTTP_200_OK)
-async def update_booking(*, product_id: UUID4, update_product: UpdateProduct, s: Annotated[Session, Depends(get_session)], settings: Annotated[Settings, Depends(get_settings)], user: Annotated[User, Security(verify_token, scopes=["product", "product:write"])]):
+async def update_products(*, product_id: UUID4, update_product: UpdateProduct, s: Annotated[Session, Depends(get_session)], settings: Annotated[Settings, Depends(get_settings)], user: Annotated[User, Security(verify_token, scopes=["product", "product:write"])]):
     try:
         db_product: Product = s.get(Product, product_id)
         db_product = db_product.sqlmodel_update(update_product)

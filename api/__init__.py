@@ -2,6 +2,7 @@ import logging
 from fastapi import FastAPI
 from sqlmodel import Session, create_engine, SQLModel
 from functools import lru_cache
+from fastapi.middleware.cors import CORSMiddleware
 
 from .config import *
 from .models import *
@@ -39,6 +40,20 @@ from .routes import router as health_router
 app = FastAPI(
     debug=settings.debug_level,
 )
+
+origins = [
+    "http://localhost",
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 app.include_router(health_router)
 app.include_router(user_router)

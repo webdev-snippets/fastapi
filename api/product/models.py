@@ -9,7 +9,7 @@ class BaseProduct(SQLModel):
     description: str
     price: int
     tags: List[str] = Field(sa_type=JSON)
-    image_path: Optional[str]
+    image_uri: Optional[str]
 
 
 class Product(BaseProduct, table=True):
@@ -29,4 +29,4 @@ class UpdateProduct(SQLModel):
     description: Optional[str]
     tags: Optional[List[str]]
     price: Optional[int]
-    image_path: Optional[str]
+    image_uri: Optional[str]
